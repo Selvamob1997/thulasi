@@ -76,6 +76,10 @@ class LoginPageController extends GetxController{
                 jsonDecode(value.body)['result'][0]['EmpType'].toString(),
                 jsonDecode(value.body)['result'][0]['ExtEmpNo'].toString(),
                 jsonDecode(value.body)['result'][0]['DOJ'].toString(),
+                jsonDecode(value.body)['result'][0]['FromLat'].toString(),
+                jsonDecode(value.body)['result'][0]['FromLong'].toString(),
+                jsonDecode(value.body)['result'][0]['Approvel'].toString(),
+                jsonDecode(value.body)['result'][0]['BloodGrop'].toString(),
            )
 
          }
@@ -89,7 +93,7 @@ class LoginPageController extends GetxController{
       deptCode,deptName,sex,
       offtell,mobile,
       email,bankac,homest,homecity,bob,marstatus,
-      emptype,exempno, DOJ) async {
+      emptype,exempno, DOJ,fromLat,fromLong,approvel,bloodGrop) async {
 
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
@@ -109,6 +113,10 @@ class LoginPageController extends GetxController{
     prefs.setString("EmpType",emptype.toString());
     prefs.setString("ExtEmpNo",exempno.toString());
     prefs.setString("DOJ",DOJ.toString());
+    prefs.setString("FromLat",fromLat.toString());
+    prefs.setString("FromLong",fromLong.toString());
+    prefs.setString("Approvel",approvel.toString());
+    prefs.setString("bloodGrop",bloodGrop.toString());
 
     prefs.setString("Status", "Login");
     RouteManageMent.goToDashboard();

@@ -1,26 +1,38 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import  'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path/path.dart';
-import 'package:intl/intl.dart';
 import 'package:thulasi/app/data/repository/_allAPIList.dart';
 import 'package:thulasi/app/utils/Utilites.dart';
 
-class ApplyPermisionController extends GetxController{
 
+class MissPunchController extends GetxController{
+
+
+  var getintime='';
+  var getcurrendate='';
   var sessionUseId  =   '';
   var sessionName = '';
   var sessionDeptCode = '';
   var sessionDeptName = '';
   var sessionEmpId = '';
 
-  TextEditingController fromdate =TextEditingController();
-  TextEditingController toTime =TextEditingController();
-  TextEditingController fromTime =TextEditingController();
-  TextEditingController totalTime =TextEditingController();
-  TextEditingController comments =TextEditingController();
+
+  var type = TextEditingController();
+  var attendanceDate = TextEditingController();
+  var inTime = TextEditingController();
+  var outTime = TextEditingController();
+  var totalHrs = TextEditingController();
+  var shiftName = TextEditingController();
+  var shiftRemarks = TextEditingController();
+
+
+  var shiftInName = TextEditingController(text: '930');
+  var shiftOutName = TextEditingController(text: '1730');
+
+
   TimeOfDay picked = TimeOfDay.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   int getDocNo=0;
@@ -31,13 +43,17 @@ class ApplyPermisionController extends GetxController{
   int Tominist=0;
   double TotalPermision=0;
 
+  List<String> punchList =['Punch In','Punch Out'];
+
+
   @override
   void onInit() {
-    fromdate.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    getDocNo = Get.arguments['DocNo'];
-    getStringValuesSF();
-    update();
     // TODO: implement onInit
+    getintime = DateFormat("hh:mm:ss a").format(DateTime.now());
+    getcurrendate = DateFormat("dd-MM-yyyy").format(DateTime.now());
+    attendanceDate.text = DateFormat("dd-MM-yyyy").format(DateTime.now());
+    log(getcurrendate+" "+getintime);
+    getStringValuesSF();
     super.onInit();
   }
 
@@ -49,51 +65,8 @@ class ApplyPermisionController extends GetxController{
     sessionDeptCode = prefs.getString('DeptCode').toString();
     sessionDeptName = prefs.getString('DeptName').toString();
     sessionEmpId = prefs.getString('ExtEmpNo').toString();
-    log(sessionName);
-    update();
-    getTotalPermision();
 
   }
-
-  getTotalPermision(){
-    Allapi.insertPermisionMaster(1, "fromdate", "fromTime", "totime", "totalTime",
-        sessionUseId, "docdate", "status", "purposeofvist", "docNo", true).then((value) => {
-          if(value.statusCode==200){
-            update(),
-            Utilities.closeLoader(),
-            TotalPermision = double.parse(jsonDecode(value.body)['result'][0]['TakenTime'].toString()),
-            if(getDocNo==0){
-
-            }else{
-              Allapi.getApprovelList(5, sessionUseId, "", "P", getDocNo.toString(), true).then((value) => {
-                if(value.statusCode==200){
-                  if(jsonDecode(value.body)['status'].toString() == "0"){
-                    update(),
-                    Utilities.closeLoader(),
-                  }else{
-                    log(value.body),
-                    fromdate.text = jsonDecode(value.body)['result'][0]['FromDatee'],
-                    fromTime.text = jsonDecode(value.body)['result'][0]['FromTime'],
-                    toTime.text = jsonDecode(value.body)['result'][0]['ToTime'],
-                    totalTime.text = jsonDecode(value.body)['result'][0]['TotalTime'],
-                    comments.text = jsonDecode(value.body)['result'][0]['Purposeofvist'].toString(),
-                    update(),
-                    Utilities.closeLoader(),
-                  }
-                }else{
-                  update(),
-                  Utilities.closeLoader(),
-                }
-              }),
-            }
-          }else{
-            update(),
-            Utilities.closeLoader(),
-          }
-    });
-
-  }
-
 
 
   selectToDate(fromid,BuildContext context)async {
@@ -104,7 +77,7 @@ class ApplyPermisionController extends GetxController{
         lastDate: DateTime(2100));
     if (picked != null) {
       if (fromid == 1) {
-        fromdate.text = DateFormat('yyyy-MM-dd').format(picked);
+        attendanceDate.text = DateFormat('yyyy-MM-dd').format(picked);
       } else if (fromid == 2) {
 
       }
@@ -137,7 +110,7 @@ class ApplyPermisionController extends GetxController{
         minits = selectedTime.minute .toString().length==1?"0"+selectedTime.minute .toString():selectedTime.minute .toString();
         session = 'PM';
         print(hour.toString()+":"+minits.toString()+"-"+session.toString());
-        fromTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
+        inTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
         update();
         totalTimeCal();
 
@@ -148,12 +121,12 @@ class ApplyPermisionController extends GetxController{
         minits = selectedTime.minute .toString().length==1?"0"+selectedTime.minute .toString():selectedTime.minute .toString();
         session = 'AM';
         print(hour.toString()+":"+minits.toString()+"-"+session.toString());
-        fromTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
+        inTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
         update();
         totalTimeCal();
 
       }else{
-        fromTime.text ='';
+        inTime.text ='';
         update();
       }
     }
@@ -186,7 +159,7 @@ class ApplyPermisionController extends GetxController{
         minits = selectedTime.minute .toString().length==1?"0"+selectedTime.minute .toString():selectedTime.minute .toString();
         session = 'PM';
         print(hour.toString()+":"+minits.toString()+"-"+session.toString());
-        toTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
+        outTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
         update();
         totalTimeCal();
 
@@ -204,12 +177,12 @@ class ApplyPermisionController extends GetxController{
         minits = selectedTime.minute .toString().length==1?"0"+selectedTime.minute .toString():selectedTime.minute .toString();
         session = 'AM';
         print(hour.toString()+":"+minits.toString()+"-"+session.toString());
-        toTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
+        outTime.text  = hour.toString()+":"+minits.toString()+"-"+session.toString();
         update();
         totalTimeCal();
 
       }else{
-        totalTime.text ='';
+        outTime.text ='';
         update();
       }
     }
@@ -221,10 +194,10 @@ class ApplyPermisionController extends GetxController{
     int subtotalMini=0;
     if(fromtime>Toime){
       log("IF");
-      toTime.text='';
-      totalTime.text='';
+      outTime.text =''; //toTime.text='';
+      totalHrs.text=''; //totalTime.text='';
       update();
-      Utilities.showDialaogboxWarningMessage(context, "To Time", 'Notification');
+      Utilities.showDialaogboxWarningMessage(Get.context, "To Time", 'Notification');
 
     }else{
       log("ELSE");
@@ -238,63 +211,43 @@ class ApplyPermisionController extends GetxController{
         print(subTotal);
         print(subtotalMini);
         //totalTime.text = subTotal.toString()+"."+subtotalMini.toString();
-        totalTime.text = subTotal.toString()+"."+(subtotalMini.toString().length==1?"0"+subtotalMini.toString():subtotalMini.toString());
+        totalHrs.text = subTotal.toString()+"."+(subtotalMini.toString().length==1?"0"+subtotalMini.toString():subtotalMini.toString());
 
       }else{
-      if(fromminist>Tominist){
-        toTime.text='';
-        totalTime.text='';
-        update();
-        Utilities.showDialaogboxWarningMessage(context, "Check Minits", 'Notification');
-      }else {
-        subTotal = (Toime - fromtime);
-        if (fromminist - Tominist < 0) {
-          subtotalMini = ((fromminist - Tominist) * -1);
-        } else {
-          subtotalMini = (fromminist - Tominist);
+        if(fromminist>Tominist){
+          outTime.text =''; //toTime.text='';
+          totalHrs.text=''; //totalTime.text='';
+          update();
+          Utilities.showDialaogboxWarningMessage(Get.context, "Check Minits", 'Notification');
+        }else {
+          subTotal = (Toime - fromtime);
+          if (fromminist - Tominist < 0) {
+            subtotalMini = ((fromminist - Tominist) * -1);
+          } else {
+            subtotalMini = (fromminist - Tominist);
+          }
+          print(subTotal);
+          print(subtotalMini);
+          totalHrs.text = subTotal.toString()+"."+(subtotalMini.toString().length==1?"0"+subtotalMini.toString():subtotalMini.toString());
         }
-        print(subTotal);
-        print(subtotalMini);
-        totalTime.text = subTotal.toString()+"."+(subtotalMini.toString().length==1?"0"+subtotalMini.toString():subtotalMini.toString());
-      }
       }
 
     }
 
   }
 
+   postSave() {
+    Allapi.insertMispunch(1, type.text, attendanceDate.text, inTime.text, outTime.text, totalHrs.text,
+        shiftName.text, shiftInName.text, shiftOutName.text, shiftRemarks.text, sessionUseId, "docdate", true).then((value) => {
+      if(value.statusCode==200){
+        update(),
+        Utilities.closeLoader(),
+        Utilities.showDialaogboxSavedMessage(Get.context,
+            jsonDecode(value.body)['result'][0]['StatusMesg'].toString(), 'Saved..')
 
-  postSave(formid){
-    print((TotalPermision+(double.parse(totalTime.text.toString()))));
-    print(double.parse(totalTime.text.toString()));
-    if(sessionUseId.isEmpty){
-      Utilities.showDialaogboxWarningMessage(context, "EmpId is not load...", 'Notification');
-    }else if(fromdate.text.isEmpty){
-      Utilities.showDialaogboxWarningMessage(context, "From Date is not load...", 'Notification');
-    } else if(fromTime.text.isEmpty){
-      Utilities.showDialaogboxWarningMessage(context, "From Time is not load...", 'Notification');
-    }
-    else if(toTime.text.isEmpty){
-      Utilities.showDialaogboxWarningMessage(context, "To Time is not load...", 'Notification');
-    }
+      }
+    });
 
-    else if(double.parse(totalTime.text.toString())<1){
-      Utilities.showDialaogboxWarningMessage(context, "Permision Should be Above 1Hrs", 'Notification');
-    }
 
-    else if( (TotalPermision+(double.parse(totalTime.text.toString())))>2 ){
-      Utilities.showDialaogboxWarningMessage(context, "Permision Time Cross the 2 hrs ", 'Notification');
-    }
-    else{
-
-      Allapi.insertPermisionMaster(formid, fromdate.text, fromTime.text, toTime.text, totalTime.text, sessionUseId, '', 'P',comments.text, getDocNo.toString(),true).then((value) => {
-        if(value.statusCode==200){
-          update(),
-          Utilities.closeLoader(),
-          Utilities.showDialaogboxSavedMessage(context, jsonDecode(value.body)['result'][0]['StatusMesg'].toString(), 'Saved..')
-        }
-
-      });
-    }
-  }
+   }
 }

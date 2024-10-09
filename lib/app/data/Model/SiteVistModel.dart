@@ -27,36 +27,50 @@ class SiteVistModel {
 class Result {
   int? docNo;
   String? empName;
-  String? cardName;
+  String? attendate;
   String? inTime;
   String? outTime;
-  String? status;
+  String? totalhrs;
+  String? shifintime;
+  String? shifoutTime;
+  String? purchase;
 
   Result(
       {this.docNo,
         this.empName,
-        this.cardName,
+        this.attendate,
         this.inTime,
         this.outTime,
-        this.status});
+        this.totalhrs,
+        this.shifintime,
+        this.shifoutTime,
+        this.purchase
+
+      });
 
   Result.fromJson(Map<String, dynamic> json) {
     docNo = json['DocNo'];
     empName = json['EmpName'];
-    cardName = json['CardName'];
+    attendate = json['AttendanceDate'];
     inTime = json['InTime'];
     outTime = json['OutTime'];
-    status = json['Status'];
+    totalhrs = json['TotalHrs'];
+    shifintime = json['ShifInTime'];
+    shifoutTime = json['ShiftOutTime'];
+    purchase = json['PuchType'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['DocNo'] = this.docNo;
     data['EmpName'] = this.empName;
-    data['CardName'] = this.cardName;
+    data['AttendanceDate'] = this.attendate;
     data['InTime'] = this.inTime;
     data['OutTime'] = this.outTime;
-    data['Status'] = this.status;
+    data['TotalHrs'] = this.totalhrs;
+    data['ShifInTime'] = this.shifintime;
+    data['ShiftOutTime'] = this.shifoutTime;
+    data['PuchType'] = this.purchase;
     return data;
   }
 }

@@ -26,66 +26,66 @@ class ApplyLeavePage extends GetView<ApplyLeaveController> {
                 alignment: Alignment.center,
                 child: MyAppBar(screenName: 'Leave Form',),
               ),
-              SizedBox(height: height/60,),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: height/30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Material(
-                      elevation: 2.0,
-                      borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                      color: Colors.white,
-                      shadowColor: Colors.black,
-                      child: Column(
-                        children: [
-                          Text("Count OF EL"),
-                          Container(
-                            height: height/20,
-                            width: width/2,
-                            alignment: Alignment.center,
-                            child: Text(controler.ELLeave.toString(),),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Material(
-                    //   elevation: 2.0,
-                    //   borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                    //   color: Colors.white,
-                    //   shadowColor: Colors.black,
-                    //   child: Column(
-                    //     children: [
-                    //       Text("Count OF SL"),
-                    //       Container(
-                    //         height: height/20,
-                    //         width: width/4,
-                    //         alignment: Alignment.center,
-                    //         child: Text(controler.SLLeave.toString(),),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    Material(
-                      elevation: 2.0,
-                      borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                      color: Colors.white,
-                      shadowColor: Colors.black,
-                      child: Column(
-                        children: [
-                          Text("Count OF COFF"),
-                          Container(
-                            height: height/20,
-                            width: width/3,
-                            alignment: Alignment.center,
-                            child: Text(controler.Comff.toString(),),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(height: height/60,),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: height/30),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //     children: [
+              //       Material(
+              //         elevation: 2.0,
+              //         borderRadius: BorderRadius.all(Radius.circular(height/10)),
+              //         color: Colors.white,
+              //         shadowColor: Colors.black,
+              //         child: Column(
+              //           children: [
+              //             Text("Count OF EL"),
+              //             Container(
+              //               height: height/20,
+              //               width: width/2,
+              //               alignment: Alignment.center,
+              //               child: Text(controler.ELLeave.toString(),),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //       // Material(
+              //       //   elevation: 2.0,
+              //       //   borderRadius: BorderRadius.all(Radius.circular(height/10)),
+              //       //   color: Colors.white,
+              //       //   shadowColor: Colors.black,
+              //       //   child: Column(
+              //       //     children: [
+              //       //       Text("Count OF SL"),
+              //       //       Container(
+              //       //         height: height/20,
+              //       //         width: width/4,
+              //       //         alignment: Alignment.center,
+              //       //         child: Text(controler.SLLeave.toString(),),
+              //       //       ),
+              //       //     ],
+              //       //   ),
+              //       // ),
+              //       Material(
+              //         elevation: 2.0,
+              //         borderRadius: BorderRadius.all(Radius.circular(height/10)),
+              //         color: Colors.white,
+              //         shadowColor: Colors.black,
+              //         child: Column(
+              //           children: [
+              //             Text("Count OF COFF"),
+              //             Container(
+              //               height: height/20,
+              //               width: width/3,
+              //               alignment: Alignment.center,
+              //               child: Text(controler.Comff.toString(),),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: height/60,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: height/30),

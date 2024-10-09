@@ -18,6 +18,7 @@ class LeaveListController extends GetxController{
   var sessionDeptCode = '';
   var sessionDeptName = '';
   var sessionEmpId = '';
+  var sessionApprovel = '';
    LeaveDataModel? rawLeaveDataModel;
   List<ScreenData> secScreenData=[];
 
@@ -38,6 +39,7 @@ class LeaveListController extends GetxController{
     sessionDeptCode = prefs.getString('DeptCode').toString();
     sessionDeptName = prefs.getString('DeptName').toString();
     sessionEmpId = prefs.getString('ExtEmpNo').toString();
+    sessionApprovel = prefs.getString('Approvel').toString();
     log(sessionName);
     update();
     getSceendate();
@@ -46,7 +48,7 @@ class LeaveListController extends GetxController{
   getSceendate(){
     secScreenData.clear();
     update();
-    Allapi.getApprovelList(1, sessionUseId, "", "P","0", true).then((value) => {
+    Allapi.getApprovelList(1, sessionUseId, sessionApprovel, "P","0", true).then((value) => {
       if(value.statusCode==200){
 
         log(value.body),

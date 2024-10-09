@@ -20,6 +20,7 @@ class MyProfilePageController extends GetxController{
   var sessionMaStatus = '';
   var sessionEmpType = '';
   var sessionDOJ = '';
+  var sessionBloodGroup = '';
 
  @override
   void onInit() {
@@ -44,6 +45,7 @@ class MyProfilePageController extends GetxController{
    sessionMaStatus = prefs.getString('MaStatus').toString();
    sessionEmpType = prefs.getString('EmpType').toString();
    sessionDOJ = prefs.getString('DOJ').toString();
+   sessionBloodGroup = prefs.getString('bloodGrop').toString();
    log(sessionName);
    update();
 

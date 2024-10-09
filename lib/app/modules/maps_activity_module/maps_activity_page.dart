@@ -34,25 +34,25 @@ class MapsActivityPage extends GetView<MapsActivityController> {
                   controllermain.controller.complete(controller);
                 },
               )),
-            Container(
-              height: height/50,
-              width: width/1.2,
-              //color: Colors.deepOrange,
-              child: Text("Select The Branch",style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w700),),
-            ),
-            InkWell(
-              onTap: (){
-                if(controllermain.attendancestatus.toString()=="0"){
-                  controllermain.showBranch();
-                }
-              },
-              child: Container(
-                height: height/20,
-                width: width/1.2,
-                color: Colors.green,
-                child: Text(controllermain.branchName,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
-              ),
-            ),
+            // Container(
+            //   height: height/50,
+            //   width: width/1.2,
+            //   //color: Colors.deepOrange,
+            //   child: Text("Select The Branch",style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w700),),
+            // ),
+            // InkWell(
+            //   onTap: (){
+            //     if(controllermain.attendancestatus.toString()=="0"){
+            //       controllermain.showBranch();
+            //     }
+            //   },
+            //   child: Container(
+            //     height: height/20,
+            //     width: width/1.2,
+            //     color: Colors.green,
+            //     child: Text(controllermain.branchName,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),),
+            //   ),
+            // ),
             Card(
               elevation: 5,
               color: Colors.white.withOpacity(0.8),

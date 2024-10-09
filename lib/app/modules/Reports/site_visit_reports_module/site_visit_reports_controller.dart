@@ -58,10 +58,13 @@ class SiteVisitReportsController extends GetxController{
               ScreenData(
                   rawSiteVistModel!.result![i].docNo,
                   rawSiteVistModel!.result![i].empName,
-                  rawSiteVistModel!.result![i].cardName,
+                  rawSiteVistModel!.result![i].attendate,
                   rawSiteVistModel!.result![i].inTime,
                   rawSiteVistModel!.result![i].outTime,
-                  rawSiteVistModel!.result![i].status),
+                  rawSiteVistModel!.result![i].totalhrs,
+                  rawSiteVistModel!.result![i].shifintime,
+                  rawSiteVistModel!.result![i].shifoutTime,
+                  rawSiteVistModel!.result![i].purchase),
             ),
           },
           Utilities.closeLoader(),
@@ -87,18 +90,24 @@ class SiteVisitReportsController extends GetxController{
 class ScreenData {
   int? docNo;
   String? empName;
-  String? cardName;
+  String? attendate;
   String? inTime;
   String? outTime;
-  String? status;
+  String? totalhrs;
+  String? shifintime;
+  String? shifoutTime;
+  String? purchase;
 
   ScreenData(
       this.docNo,
       this.empName,
-      this.cardName,
+      this.attendate,
       this.inTime,
       this.outTime,
-      this.status);
+      this.totalhrs,
+      this.shifintime,
+      this.shifoutTime,
+      this.purchase);
 
 
 }

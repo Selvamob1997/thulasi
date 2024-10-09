@@ -69,7 +69,7 @@ class DashBoardPage extends GetView<DashBoardController> {
                       ),
                     ),
                     Container(
-                      height: height/4,
+                      height: height/5,
                       width: width/1.1,
                       margin: EdgeInsets.only(left: width/20,top: height/12),
                       decoration: BoxDecoration(
@@ -96,7 +96,7 @@ class DashBoardPage extends GetView<DashBoardController> {
                               SizedBox(
                                 height: height/30,
                                 width: width/5,
-                                child: Text('07 - OCT',
+                                child: Text(controller.currentDate,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: height/60,
@@ -129,65 +129,8 @@ class DashBoardPage extends GetView<DashBoardController> {
                           SizedBox(
                             height: height/40,
                           ),
-                          SizedBox(
-                            height: height/50,
-                            width: width/1.2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  width: width/4.5,
-                                  alignment: Alignment.center,
-                                  child: const Text('Total EL',style: TextStyle(color: Colors.white70,fontWeight: FontWeight.w700),),
-                                ),
-                                Container(
-                                  width: width/4.5,
-                                  alignment: Alignment.center,
-                                  child: const Text('Total SL',style: TextStyle(color: Colors.white70,fontWeight: FontWeight.w700),),
-                                ),
-                                Container(
-                                  width: width/7,
-                                  alignment: Alignment.center,
-                                  child: const Text('ComOff ',style: TextStyle(color: Colors.white70,fontWeight: FontWeight.w700),),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 2,
-                          ),
-                          SizedBox(
-                            height: height/25,
-                            width: width/1.2,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  width: width/4.5,
-                                  alignment: Alignment.center,
-                                  child:  Text(controller.ELLeave.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
-                                ),
-                                Container(
-                                  width: 1,
-                                  color: Colors.white38,
-                                ),
-                                Container(
-                                  width: width/4.5,
-                                  alignment: Alignment.center,
-                                  child:  Text(controller.SLLeave.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
-                                ),
-                                Container(
-                                  width: 1,
-                                  color: Colors.white38,
-                                ),
-                                Container(
-                                  width: width/7,
-                                  alignment: Alignment.center,
-                                  child:  Text(controller.Comff.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900),),
-                                ),
-                              ],
-                            ),
-                          )
+
+
                         ],
                       ),
                     ),
@@ -328,7 +271,7 @@ class DashBoardPage extends GetView<DashBoardController> {
                           onPressed: () {
                             controller.getdashboardNavigation(10);
                           },
-                          child: Text('Site Visit',style: TextStyle(color: Colors.cyan),),),
+                          child: Text('Miss Punch',style: TextStyle(color: Colors.cyan),),),
                       )
 
                     ],

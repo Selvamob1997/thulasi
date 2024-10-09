@@ -118,6 +118,36 @@ class LeaveListPage extends GetView<LeaveListController> {
                                   ],
                                 ),
                               ),
+                              const SizedBox(height: 5,),
+
+                              Visibility(
+                                visible: controller.sessionApprovel=="Y"?true:false,
+                                child: SizedBox(
+                                width: width,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ElevatedButton(onPressed: (){
+                                          controller.statusUpdataion(controller.secScreenData[index].docNo, "A");
+                                        }, child: Text("Approve")),
+                                        SizedBox(width: width/100,),
+                                        ElevatedButton(
+                                          onPressed: (){
+                                            controller.statusUpdataion(controller.secScreenData[index].docNo, "R");
+                                          }, child: Text("Reject"),
+                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              )
+
+
                             ],
                           ),
                           dense: true,

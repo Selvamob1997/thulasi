@@ -20,4 +20,6 @@ abstract class Routes {
   static const ON_DUTY_MASTER = '/on_duty_master'; // OnDutyMaster page
   static const SITE_VISIT_REPORTS = '/site_visit_reports'; // SiteVisitReports page
   static const HOLI_DAY_LIST = '/holi_day_list'; // HoliDayList page
+  static const ACTIVE_STATUS = '/active_status'; // ActiveStatus page
+  static const MISS_PUNCH = '/miss_punch'; // MissPunch page
 }

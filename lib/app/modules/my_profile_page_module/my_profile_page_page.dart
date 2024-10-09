@@ -256,6 +256,41 @@ class MyProfilePagePage extends GetView<MyProfilePageController> {
                       margin: EdgeInsets.only(left: width/50),
                       child: Row(
                         children: [
+                          SizedBox(width: width/3,child:  const Text("DOJ",style: TextStyle(color: Colors.black38),)),
+                          Text(controller.sessionDOJ.toString()),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: height/30,
+                      width: width/1.1,
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: width/50),
+                      child: Row(
+                        children: [
+                          SizedBox(width: width/3,child:  const Text("Blood Group",style: TextStyle(color: Colors.black38),)),
+                          Text(controller.sessionBloodGroup.toString()),
+                        ],
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              SizedBox(height: height/100,),
+
+              Card(
+                elevation: 5,
+                color: Colors.white.withOpacity(0.8),
+                child: Column(
+                  children: [
+                    Container(
+                      height: height/25,
+                      width: width/1.1,
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: width/50),
+                      child: Row(
+                        children: [
                           SizedBox(width: width/3,child:  const Text("Home Street",style: TextStyle(color: Colors.black38),)),
                           Text(controller.sessionHomeSt.toString()),
                         ],

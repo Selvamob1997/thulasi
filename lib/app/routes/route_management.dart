@@ -71,4 +71,15 @@ abstract class RouteManageMent{
       'ScreenName':'Holiday List'
     });
   }
+  static void goToActiveStatus(){
+    Get.toNamed(Routes.ACTIVE_STATUS,arguments:<String,dynamic>{
+      'ScreenName':'Holiday List'
+    });
+  }
+
+  static void goToMissPunch(){
+    Get.toNamed(Routes.MISS_PUNCH,arguments:<String,dynamic>{
+      'ScreenName':'Holiday List'
+    });
+  }
 }

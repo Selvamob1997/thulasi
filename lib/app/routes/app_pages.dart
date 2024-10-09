@@ -1,3 +1,7 @@
+import '../../app/modules/miss_punch_module/miss_punch_page.dart';
+import '../../app/modules/miss_punch_module/miss_punch_bindings.dart';
+import '../../app/modules/active_status_module/active_status_page.dart';
+import '../../app/modules/active_status_module/active_status_bindings.dart';
 import 'package:thulasi/app/modules/Reports/leave_list_module/leave_list_bindings.dart';
 import 'package:thulasi/app/modules/Reports/leave_list_module/leave_list_page.dart';
 import 'package:thulasi/app/modules/Reports/on_duty_master_module/on_duty_master_bindings.dart';
@@ -113,6 +117,16 @@ abstract class AppPages {
       name: Routes.HOLI_DAY_LIST,
       page: () => HoliDayListPage(),
       binding: HoliDayListBinding(),
+    ),
+    GetPage(
+      name: Routes.ACTIVE_STATUS,
+      page: () => ActiveStatusPage(),
+      binding: ActiveStatusBinding(),
+    ),
+    GetPage(
+      name: Routes.MISS_PUNCH,
+      page: () => MissPunchPage(),
+      binding: MissPunchBinding(),
     ),
   ];
 }

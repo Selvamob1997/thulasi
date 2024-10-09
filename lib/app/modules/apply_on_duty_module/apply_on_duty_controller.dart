@@ -7,6 +7,10 @@ import 'package:path/path.dart';
 import 'package:intl/intl.dart';
 import 'package:thulasi/app/data/repository/_allAPIList.dart';
 import 'package:thulasi/app/utils/Utilites.dart';
+import 'package:location/location.dart' as loc;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 class ApplyOnDutyController extends GetxController{
 
 
@@ -40,16 +44,25 @@ class ApplyOnDutyController extends GetxController{
   var sendfromdate = '';
   var sendtodate = '';
 
+  loc.Location location = loc.Location();
+  late loc.PermissionStatus _permissionGranted;
+  LatLng? latlong ;
+  RxString insetlat="0".obs;
+  var insetlon='0'.obs;
+  var insetAddress='0'.obs;
+  var cardcode='choose Client'.obs;
+  var cardname='choose Client'.obs;
+
 
   @override
   void onInit() {
-    secOnduty.addAll(['Half Day','Full Day']);
+    secOnduty.addAll(['Site Visit','Camp','Door Delivery','Marketing','Branch Work']);
     getDocNo = Get.arguments['DocNo'];
     sendfromdate = DateFormat('yyyyMMdd').format(DateTime.now());
     sendtodate = DateFormat('yyyyMMdd').format(DateTime.now());
     fromdate.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
     todate.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    getStringValuesSF();
+    permision();
     update();
     // TODO: implement onInit
     super.onInit();
@@ -94,6 +107,50 @@ class ApplyOnDutyController extends GetxController{
       });
 
     }
+  }
+
+
+  permision() async {
+    log('permision');
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == loc.PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != loc.PermissionStatus.granted) {
+        return;
+      }
+    }
+    update();
+    Utilities.showMapLoader();
+    getLocation();
+  }
+
+  getLocation() async {
+    log('getLocation');
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    latlong = LatLng(position.latitude, position.longitude);
+    log(position.latitude.toString());
+    log(position.longitude.toString());
+    insetlat=position.latitude.toString().obs;
+    insetlon=position.longitude.toString().obs;
+    update();
+    _getAddressFromLatLng(position.latitude, position.longitude, position);
+  }
+
+  Future<void> _getAddressFromLatLng(lat, lang, Position position) async {
+
+    await placemarkFromCoordinates(position.latitude, position.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      insetAddress =
+          '${place.street}, ${place.subLocality}, ${place.locality},${place.administrativeArea}, ${place.postalCode}'.obs;
+      log(insetAddress.toLowerCase());
+      Utilities.closeLoader();
+      update();
+      getStringValuesSF();
+      //getCheckingVist();
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
   }
 
   selectToDate1(fromid,BuildContext context)async {
@@ -257,7 +314,9 @@ class ApplyOnDutyController extends GetxController{
       Utilities.showDialaogboxWarningMessage(context, "Purpose should not be empty...", 'Notification');
     }
     else{
-    Allapi.insertOnDutyMaster(formid, Ondutysessiontype.text, fromdate.text, todate.text, fromLocation.text, tolocation.text, fromTime.text, toTime.text, sessionUseId, 'P', '',getDocNo.toString(), purposecomment.text,true).then((value) => {
+    Allapi.insertOnDutyMaster(formid, Ondutysessiontype.text, fromdate.text, todate.text,
+        fromLocation.text, tolocation.text, fromTime.text, toTime.text, sessionUseId, 'P', '',
+        getDocNo.toString(), purposecomment.text,insetlat.obs.toString(),insetlon.obs.toString(),insetAddress.obs.toString(),true).then((value) => {
       if(value.statusCode==200){
         update(),
         Utilities.closeLoader(),

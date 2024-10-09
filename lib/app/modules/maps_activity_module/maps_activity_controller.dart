@@ -13,17 +13,16 @@ import 'package:thulasi/app/data/Model/getBranchModel.dart';
 import 'package:thulasi/app/utils/Utilites.dart';
 import '../../data/repository/_allAPIList.dart';
 import  'package:intl/intl.dart';
+import  'dart:math' as Math;
+import  'package:vector_math/vector_math.dart' as Vmath;
 
 class MapsActivityController extends GetxController{
-
   static MapsActivityController instance = Get.find();
   late Position position;
   loc.Location location = loc.Location();
   late bool _serviceEnabled;
   late loc.PermissionStatus _permissionGranted;
-
   LatLng? latlong ;
-
   RxString insetlat="0".obs;
   var insetlon='0'.obs;
   var insetAddress='0'.obs;
@@ -33,7 +32,7 @@ class MapsActivityController extends GetxController{
   var sessionDeptCode = '';
   var sessionDeptName = '';
   var sessionEmpId = '';
-   late final CameraPosition kGoogle;
+  late final CameraPosition kGoogle;
   Completer<GoogleMapController> controller = Completer();
   var checkStatus;
   var attendancestatus=''.obs;
@@ -41,9 +40,12 @@ class MapsActivityController extends GetxController{
   var getcurrendate='';
   late getBranchModel rawgetBranchModel;
   List<BranchScreen> secBranchScreen=[];
-
   var branchName ='';
   var branchCode='';
+  double tolrenaces=300;
+  double diff=0;
+  var fromLat='0';
+  var fromLong='0';
 
   @override
   void onInit() {
@@ -55,7 +57,6 @@ class MapsActivityController extends GetxController{
     super.onInit();
   }
 
-
   getStringValuesSF() async {
     log("message");
     SharedPreferences prefs =await SharedPreferences.getInstance();
@@ -64,11 +65,17 @@ class MapsActivityController extends GetxController{
     sessionDeptCode = prefs.getString('DeptCode').toString();
     sessionDeptName = prefs.getString('DeptName').toString();
     sessionEmpId = prefs.getString('ExtEmpNo').toString();
+    fromLat = prefs.getString('FromLat').toString();
+    fromLong = prefs.getString('FromLong').toString();
     log(sessionName);
-    update();
-    main();
-  }
+    if(fromLat.toString()=="0"){
+      Utilities.showDialaogboxWarning(Get.context, "Check The Employee Master Lat And Long",);
+    }else{
+      update();
+      main();
+    }
 
+  }
 
   main() async {
     log('Main');
@@ -96,6 +103,7 @@ class MapsActivityController extends GetxController{
     Utilities.showMapLoader();
     getLocation();
   }
+
   getLocation() async {
     log('getLocation');
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -107,6 +115,7 @@ class MapsActivityController extends GetxController{
     update();
     _getAddressFromLatLng(position.latitude, position.longitude, position);
   }
+
   Future<void> _getAddressFromLatLng(lat, lang, Position position) async {
     await placemarkFromCoordinates(position.latitude, position.longitude)
         .then((List<Placemark> placemarks) {
@@ -124,6 +133,7 @@ class MapsActivityController extends GetxController{
       debugPrint(e.toString());
     });
   }
+
   checkattendance(){
     Allapi.postattendance(false,//isloading,
       3,// formid,
@@ -170,8 +180,30 @@ class MapsActivityController extends GetxController{
     });
 
   }
+
   startattendance(){
-    Allapi.postattendance(true,//isloading,
+    int meatervalidation=0;
+    double earthRadius = 6371000; //meters
+    double dLat = Vmath.radians(double.parse(insetlat.toString())-double.parse(fromLat.toString()));
+    double dLng = Vmath.radians(double.parse(insetlon.toString())-double.parse(fromLong.toString()));
+    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Vmath.radians(double.parse(insetlat.toString()))) *Math. cos(Vmath.radians(double.parse(fromLat.toString()))) * Math.sin(dLng/2) * Math.sin(dLng/2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    double dist =  (earthRadius * c);
+    print(dist.toString());
+    diff=(earthRadius * c);
+    double dd= tolrenaces;
+    print("Distances - $dist");
+    print("Total - "+dd.toString());
+    if (dist>dd){
+      print(meatervalidation=1);
+    }else{
+      print(meatervalidation=0);
+    }
+
+    if(meatervalidation==1){
+      Utilities.showDialaogboxWarningMessage(Get.context, "Check Out below the 100 meters - "+dist.toString(), 'Notification');
+    }else{
+      Allapi.postattendance(true,//isloading,
         1,// formid,
         sessionName,//name,
         sessionEmpId,//empId,
@@ -193,27 +225,51 @@ class MapsActivityController extends GetxController{
         getintime,//fromtime,
         '',//totime,
         'HalfDay',//finalstatus
-    ).then((value) => {
-      log(value.body),
-      if(value.statusCode==200){
-        Utilities.closeLoader(),
-        checkStatus = jsonDecode(value.body)['status'] = 0,
-        if(checkStatus==false){
-          Utilities.alertsnackBar('Error','Somthing went wrong...',2),
-          update(),
-        }else{
+      ).then((value) => {
+        log(value.body),
+        if(value.statusCode==200){
+          Utilities.closeLoader(),
+          checkStatus = jsonDecode(value.body)['status'] = 0,
+          if(checkStatus==false){
+            Utilities.alertsnackBar('Error','Somthing went wrong...',2),
+            update(),
+          }else{
             //Utilities.alertsnackBar('Success',jsonDecode(value.body)['result'][0]['STATUSNAME'].toString(),3),
-          log(jsonDecode(value.body)['result'][0]['STATUSNAME'].toString()),
-          checkattendance(),
-          log("Close...."),
-          update(),
-          //Utilities.closeLoader(),
+            log(jsonDecode(value.body)['result'][0]['STATUSNAME'].toString()),
+            checkattendance(),
+            log("Close...."),
+            update(),
+            //Utilities.closeLoader(),
+          }
         }
-      }
-    });
+      });
+
+    }
+
   }
 
   stopattendance(){
+    int meatervalidation=0;
+    double earthRadius = 6371000; //meters
+    double dLat = Vmath.radians(double.parse(insetlat.toString())-double.parse(fromLat.toString()));
+    double dLng = Vmath.radians(double.parse(insetlon.toString())-double.parse(fromLong.toString()));
+    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Vmath.radians(double.parse(insetlat.toString()))) *Math. cos(Vmath.radians(double.parse(fromLat.toString()))) * Math.sin(dLng/2) * Math.sin(dLng/2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    double dist =  (earthRadius * c);
+    print(dist.toString());
+    diff=(earthRadius * c);
+    double dd= tolrenaces;
+    print("Distances - $dist");
+    print("Total - "+dd.toString());
+    if (dist>dd){
+      print(meatervalidation=1);
+    }else{
+      print(meatervalidation=0);
+    }
+
+    if(meatervalidation==1){
+      Utilities.showDialaogboxWarningMessage(Get.context, "Check Out below the 100 meters - "+dist.toString(), 'Notification');
+    }else{
     Allapi.postattendance(true,//isloading,
       2,// formid,
       sessionName,//name,
@@ -241,11 +297,13 @@ class MapsActivityController extends GetxController{
       if(value.statusCode==200){
         Utilities.closeLoader(),
         checkStatus = jsonDecode(value.body)['status'] = 0,
+        update(),
         if(checkStatus==false){
           Utilities.alertsnackBar('Error','Somthing went wrong...',2),
           //Utilities.closeLoader(),
           update(),
         }else{
+          Utilities.closeLoader(),
           // Utilities.alertsnackBar('Success',jsonDecode(value.body)['result'][0]['STATUSNAME'].toString(),3),
           log(jsonDecode(value.body)['result'][0]['STATUSNAME'].toString()),
           Get.back(),
@@ -255,9 +313,31 @@ class MapsActivityController extends GetxController{
         }
       }
     });
+    }
   }
 
   lunchIn(){
+    int meatervalidation=0;
+    double earthRadius = 6371000; //meters
+    double dLat = Vmath.radians(double.parse(insetlat.toString())-double.parse(fromLat.toString()));
+    double dLng = Vmath.radians(double.parse(insetlon.toString())-double.parse(fromLong.toString()));
+    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Vmath.radians(double.parse(insetlat.toString()))) *Math. cos(Vmath.radians(double.parse(fromLat.toString()))) * Math.sin(dLng/2) * Math.sin(dLng/2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    double dist =  (earthRadius * c);
+    print(dist.toString());
+    diff=(earthRadius * c);
+    double dd= tolrenaces;
+    print("Distances - $dist");
+    print("Total - "+dd.toString());
+    if (dist>dd){
+      print(meatervalidation=1);
+    }else{
+      print(meatervalidation=0);
+    }
+
+    if(meatervalidation==1){
+      Utilities.showDialaogboxWarningMessage(Get.context, "Check Out below the 100 meters - "+dist.toString(), 'Notification');
+    }else{
     Allapi.postattendance(true,//isloading,
       4,// formid,
       sessionName,//name,
@@ -299,9 +379,31 @@ class MapsActivityController extends GetxController{
         }
       }
     });
+    }
   }
 
   lunchout(){
+    int meatervalidation=0;
+    double earthRadius = 6371000; //meters
+    double dLat = Vmath.radians(double.parse(insetlat.toString())-double.parse(fromLat.toString()));
+    double dLng = Vmath.radians(double.parse(insetlon.toString())-double.parse(fromLong.toString()));
+    double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(Vmath.radians(double.parse(insetlat.toString()))) *Math. cos(Vmath.radians(double.parse(fromLat.toString()))) * Math.sin(dLng/2) * Math.sin(dLng/2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    double dist =  (earthRadius * c);
+    print(dist.toString());
+    diff=(earthRadius * c);
+    double dd= tolrenaces;
+    print("Distances - $dist");
+    print("Total - "+dd.toString());
+    if (dist>dd){
+      print(meatervalidation=1);
+    }else{
+      print(meatervalidation=0);
+    }
+
+    if(meatervalidation==1){
+      Utilities.showDialaogboxWarningMessage(Get.context, "Check Out below the 100 meters - "+dist.toString(), 'Notification');
+    }else{
     Allapi.postattendance(true,//isloading,
       5,// formid,
       sessionName,//name,
@@ -343,6 +445,7 @@ class MapsActivityController extends GetxController{
         }
       }
     });
+    }
   }
 
   getBranch() {
@@ -369,7 +472,7 @@ class MapsActivityController extends GetxController{
 
   }
 
-   showBranch() {
+  showBranch() {
      Get.dialog(
        AlertDialog(
          content: SizedBox(
@@ -388,7 +491,7 @@ class MapsActivityController extends GetxController{
                  child: SizedBox(
                    height: 50,
                      width: 100,
-                     child: Text(secBranchScreen[index].branchCode),
+                     child: Text(secBranchScreen[index].branchCode.toString()),
                  ),
                );
              },)
@@ -402,7 +505,5 @@ class MapsActivityController extends GetxController{
 class BranchScreen {
   var code;
   var branchCode;
-
   BranchScreen(this.code, this.branchCode);
-
 }

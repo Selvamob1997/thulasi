@@ -24,7 +24,7 @@ class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
                 height: height/10,
                 width: width,
                 alignment: Alignment.center,
-                child: MyAppBar(screenName: 'Visit Reports',),
+                child: MyAppBar(screenName: 'Miss Punch',),
               ),
               Container(
                 height: height/1.2,
@@ -58,47 +58,145 @@ class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
                               SizedBox(
                                 width: width,
                                 child: Text(
-                                    controller.secScreenData[index].cardName.toString(),
+                                    controller.secScreenData[index].attendate.toString(),
                                     style: const TextStyle(color: Colors.black45,fontWeight: FontWeight.w500)
                                 ),
                               ),
                               const SizedBox(height: 5,),
                               SizedBox(
                                 width: width,
-                                child: Text(
-                                    controller.secScreenData[index].inTime.toString(),
-                                    style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
-                                ),
-                              ),
-                              const SizedBox(height: 5,),
-                              SizedBox(
-                                width: width,
-                                child: Text(
-                                    controller.secScreenData[index].outTime.toString(),
-                                    style: const TextStyle(color: Colors.pinkAccent,fontWeight: FontWeight.w500)
-                                ),
-                              ),
-                              const SizedBox(height: 5,),
-                              SizedBox(
-                                width: width,
-                                child: Column(
+                                child: Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        const Text('Status      ',
-                                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700)
-                                        ),
-                                        Icon(
-                                          controller.secScreenData[index].status.toString()=="P"? Icons.pending:
-                                          controller.secScreenData[index].status.toString()=="H"? Icons.pending:
-                                          Icons.check_circle,
-                                          color: controller.secScreenData[index].status.toString()=="P"? Colors.orangeAccent:
-                                          controller.secScreenData[index].status.toString()=="H"? Colors.red:
-                                          Colors.green,
-
-                                        )
-                                      ],
+                                    Container(
+                                      width: width/3.5,
+                                      child: Text(
+                                          "Punch Type",
+                                          style: const TextStyle(color: Colors.red,fontWeight: FontWeight.w500)
+                                      ),
                                     ),
+                                    Container(
+                                      width: width/2.5,
+                                      child: Text(
+                                          controller.secScreenData[index].purchase.toString(),
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width/3.5,
+                                      child: Text(
+                                          "In Time",
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width/2.5,
+                                      child: Text(
+                                          controller.secScreenData[index].inTime.toString(),
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width/3.5,
+                                      child: Text(
+                                          "Out Time",
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width/2.5,
+                                      child: Text(
+                                          controller.secScreenData[index].outTime.toString(),
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width/3.5,
+                                      child: Text(
+                                          "Total Hrs",
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width/2.5,
+                                      child: Text(
+                                          controller.secScreenData[index].totalhrs.toString(),
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width/3.5,
+                                      child: Text(
+                                          "Shif In Time",
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width/2.5,
+                                      child: Text(
+                                          controller.secScreenData[index].shifintime.toString(),
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: width/3.5,
+                                      child: Text(
+                                          "Shif Out Time",
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+                                    Container(
+                                      width: width/2.5,
+                                      child: Text(
+                                          controller.secScreenData[index].shifoutTime.toString(),
+                                          style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                      ),
+                                    ),
+
                                   ],
                                 ),
                               ),

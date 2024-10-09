@@ -267,7 +267,7 @@ abstract class Allapi {
 
 
   static Future<http.Response> insertOnDutyMaster(formid,onDutyType,fromDate,toDate,fromLocation,toLocation,fromTime,toTime,
-      empId,status,docDate,docNo,purpose,isloading) async {
+      empId,status,docDate,docNo,purpose,lat,long,adreess,isloading) async {
 
     if(isloading)Utilities.showLoader();
     log(LIVE_URL + 'insetOnDutymaster');
@@ -285,7 +285,10 @@ abstract class Allapi {
       "Status": status,
       "DocDate": docDate,
       "DocNo": docNo,
-      "Purpose":purpose
+      "Purpose":purpose,
+      "Lat":lat,
+      "Long":long,
+      "Adreess":adreess
     };
     log(jsonEncode(body));
     try {
@@ -322,6 +325,49 @@ abstract class Allapi {
       throw Exception('Internet is down');
     }
   }
+
+
+
+  static Future<http.Response> insertMispunch(formid,purchaseType,attendocdate,inTime, outTime, totalHrs, shiftName, shifIntime, shifOutTime, remarks, creatyBy, docdate, isloading) async {
+
+    if(isloading)Utilities.showLoader();
+    log(LIVE_URL + 'insertMisspunch');
+    var headers = {"Content-Type": "application/json"};
+    var body = {
+      "FromId": formid,
+      "PuchType": purchaseType,
+      "AttendanceDate": attendocdate,
+      "InTime": inTime,
+      "OutTime":outTime,
+      "TotalHrs":totalHrs,
+      "ShiftName":shiftName,
+      "ShiftInTime":shifIntime,
+      "ShiftOutTime":shifOutTime,
+      "Remarks":remarks,
+      "CreateBy":creatyBy,
+      "DocDate":docdate,
+    };
+    log(jsonEncode(body));
+    try {
+      final response = await http.post(
+          Uri.parse(LIVE_URL + 'insertMisspunch'),
+          body: jsonEncode(body),
+          headers: headers);
+      return response;
+    } on SocketException {
+      throw Exception('Internet is down');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
 
 
 }

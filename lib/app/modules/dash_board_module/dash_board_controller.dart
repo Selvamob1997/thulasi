@@ -22,11 +22,18 @@ class DashBoardController extends GetxController{
   double SLLeave=0;
   double ELLeave=0;
   double Comff=0;
+  var currentDate='';
 
   @override
   void onInit() {
     // TODO: implement onInit
-    getStringValuesSF();
+    var now = DateTime.now();
+    var formatter = DateFormat('dd-MM-yyyy');
+    String formattedDate = formatter.format(now);
+    print(formattedDate);
+    currentDate = formattedDate;
+    update();
+        getStringValuesSF();
     super.onInit();
   }
 
@@ -160,6 +167,10 @@ class DashBoardController extends GetxController{
       RouteManageMent.goToSiteVistList();
     }else if(formid==11){
       RouteManageMent.goToHoliyDayList();
+    }else if(formid==12){
+      RouteManageMent.goToActiveStatus();
+    }else if(formid==13){
+      RouteManageMent.goToMissPunch();
     }
 
 
