@@ -34,6 +34,7 @@ class Result {
   String? shifintime;
   String? shifoutTime;
   String? purchase;
+  String? status;
 
   Result(
       {this.docNo,
@@ -44,7 +45,7 @@ class Result {
         this.totalhrs,
         this.shifintime,
         this.shifoutTime,
-        this.purchase
+        this.purchase,this.status
 
       });
 
@@ -58,6 +59,7 @@ class Result {
     shifintime = json['ShifInTime'];
     shifoutTime = json['ShiftOutTime'];
     purchase = json['PuchType'];
+    status = json['Status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -71,6 +73,7 @@ class Result {
     data['ShifInTime'] = this.shifintime;
     data['ShiftOutTime'] = this.shifoutTime;
     data['PuchType'] = this.purchase;
+    data['Status'] = this.status;
     return data;
   }
 }

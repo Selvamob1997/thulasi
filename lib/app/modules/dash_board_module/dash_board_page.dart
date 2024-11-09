@@ -242,7 +242,41 @@ class DashBoardPage extends GetView<DashBoardController> {
                         width: width/5,
                         child: TextButton(
                           onPressed: () {
-                           controller.getdashboardNavigation(7);
+
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: SizedBox(
+                                    width: double.minPositive,
+                                    height: height/9,
+                                    child: Column(
+                                      children: [
+                                        TextButton(
+                                            onPressed: (){
+                                              Get.back();
+                                              controller.getdashboardNavigation(7);
+                                            },
+                                            child: Text("Approve"),
+                                        ),
+                                        TextButton(
+                                            onPressed: (){
+                                              Get.back();
+                                              controller.getdashboardNavigation(14);
+                                            },
+                                            child: Text("Reports"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+
+
+
+
                           },
                           child: Text('Leave',style: TextStyle(color: Colors.green),),),
                       ),
@@ -251,7 +285,40 @@ class DashBoardPage extends GetView<DashBoardController> {
                         width: width/4,
                         child: TextButton(
                           onPressed: () {
-                            controller.getdashboardNavigation(8);
+
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: SizedBox(
+                                    width: double.minPositive,
+                                    height: height/9,
+                                    child: Column(
+                                      children: [
+                                        TextButton(
+                                          onPressed: (){
+                                            Get.back();
+                                            controller.getdashboardNavigation(8);
+                                            //controller.getdashboardNavigation(7);
+                                          },
+                                          child: Text("Approve"),
+                                        ),
+                                        TextButton(
+                                          onPressed: (){
+                                            Get.back();
+                                            controller.getdashboardNavigation(15);
+                                          },
+                                          child: Text("Reports"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+
+
                           },
                           child: Text('Permission',style: TextStyle(color: Colors.orange),),),
                       ),
@@ -260,7 +327,37 @@ class DashBoardPage extends GetView<DashBoardController> {
                         width: width/5,
                         child: TextButton(
                           onPressed: () {
-                            controller.getdashboardNavigation(9);
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: SizedBox(
+                                    width: double.minPositive,
+                                    height: height/9,
+                                    child: Column(
+                                      children: [
+                                        TextButton(
+                                          onPressed: (){
+                                            Get.back();
+                                            controller.getdashboardNavigation(9);
+                                          },
+                                          child: Text("Approve"),
+                                        ),
+                                        TextButton(
+                                          onPressed: (){
+                                            Get.back();
+                                            controller.getdashboardNavigation(16);
+                                          },
+                                          child: Text("Reports"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+
                           },
                           child: Text('On duty',style: TextStyle(color: Colors.pinkAccent),),),
                       ),
@@ -269,7 +366,38 @@ class DashBoardPage extends GetView<DashBoardController> {
                         width: width/5,
                         child: TextButton(
                           onPressed: () {
-                            controller.getdashboardNavigation(10);
+
+
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: SizedBox(
+                                    width: double.minPositive,
+                                    height: height/9,
+                                    child: Column(
+                                      children: [
+                                        TextButton(
+                                          onPressed: (){
+                                            Get.back();
+                                            controller.getdashboardNavigation(10);
+                                          },
+                                          child: Text("Approve"),
+                                        ),
+                                        TextButton(
+                                          onPressed: (){
+                                            Get.back();
+                                            controller.getdashboardNavigation(17);
+                                          },
+                                          child: Text("Reports"),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
                           },
                           child: Text('Miss Punch',style: TextStyle(color: Colors.cyan),),),
                       )

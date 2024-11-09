@@ -2,15 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../data/Model/OnDutyDataModel.dart';
-import 'package:path/path.dart';
+import 'package:thulasi/app/data/repository/_allAPIList.dart';
 import 'package:intl/src/intl/date_format.dart';
-import '../../../data/repository/_allAPIList.dart';
-import '../../../routes/app_pages.dart';
-import '../../../utils/Utilites.dart';
+import '../../data/Model/SiteVistModel.dart';
+import '../../utils/Utilites.dart';
 
 
-class OnDutyMasterController extends GetxController{
+class SiteVisitApproveController extends GetxController{
 
   var sessionUseId  =   '';
   var sessionName = '';
@@ -18,7 +16,7 @@ class OnDutyMasterController extends GetxController{
   var sessionDeptName = '';
   var sessionEmpId = '';
   var sessionApprovel = '';
-  OnDutyDataModel? rawOnDutyDataModel;
+  SiteVistModel? rawSiteVistModel;
   List<ScreenData> secScreenData=[];
 
   @override
@@ -28,7 +26,6 @@ class OnDutyMasterController extends GetxController{
     update();
     super.onInit();
   }
-
 
   getStringValuesSF() async {
     log("message");
@@ -47,7 +44,7 @@ class OnDutyMasterController extends GetxController{
   getSceendate(){
     secScreenData.clear();
     update();
-    Allapi.getApprovelList(2, sessionUseId, "", "P","0", true).then((value) => {
+    Allapi.getApprovelList(11, sessionUseId, "", "P", "0",true).then((value) => {
       if(value.statusCode==200){
 
         log(value.body),
@@ -55,22 +52,23 @@ class OnDutyMasterController extends GetxController{
         if(jsonDecode(value.body)['status'].toString() == "0"){
           Utilities.closeLoader(),
           update(),
-          Utilities.showDialaogboxWarningMessage(context, "No data", "Warning")
+          Utilities.showDialaogboxWarningMessage(Get.context, "No data", "Warning")
         }else{
-          rawOnDutyDataModel = OnDutyDataModel.fromJson(jsonDecode(value.body)),
-          for(int i=0;i<rawOnDutyDataModel!.result!.length;i++){
+          rawSiteVistModel = SiteVistModel.fromJson(jsonDecode(value.body)),
+          for(int i=0;i<rawSiteVistModel!.result!.length;i++){
             secScreenData.add(
               ScreenData(
-                  rawOnDutyDataModel!.result![i].docNo,
-                  rawOnDutyDataModel!.result![i].empName,
-                  rawOnDutyDataModel!.result![i].onDutyType,
-                  rawOnDutyDataModel!.result![i].fromDate,
-                  rawOnDutyDataModel!.result![i].toDate,
-                  rawOnDutyDataModel!.result![i].fromLoc,
-                  rawOnDutyDataModel!.result![i].toLoc,
-                  rawOnDutyDataModel!.result![i].fromTime,
-                  rawOnDutyDataModel!.result![i].toTime,
-                  rawOnDutyDataModel!.result![i].status),
+                rawSiteVistModel!.result![i].docNo,
+                rawSiteVistModel!.result![i].empName,
+                rawSiteVistModel!.result![i].attendate,
+                rawSiteVistModel!.result![i].inTime,
+                rawSiteVistModel!.result![i].outTime,
+                rawSiteVistModel!.result![i].totalhrs,
+                rawSiteVistModel!.result![i].shifintime,
+                rawSiteVistModel!.result![i].shifoutTime,
+                rawSiteVistModel!.result![i].purchase,
+                rawSiteVistModel!.result![i].status,
+              ),
             ),
           },
           Utilities.closeLoader(),
@@ -89,9 +87,8 @@ class OnDutyMasterController extends GetxController{
     });
   }
 
-
   statusUpdataion(docNo,status){
-    Allapi.insertLeaveMaster(7, sessionUseId, "", "leaveCode", "fromDate", DateFormat('yyyy-MM-dd').format(DateTime.now()), "noOfDays",
+    Allapi.insertLeaveMaster(5, sessionUseId, "", "leaveCode", "fromDate", DateFormat('yyyy-MM-dd').format(DateTime.now()), "noOfDays",
         "comments", status, docNo, true).then((value) => {
       if(value.statusCode==200){
         update(),
@@ -106,40 +103,31 @@ class OnDutyMasterController extends GetxController{
 
     });
   }
-
-
-  postDataPassing(docNo){
-    Get.toNamed(Routes.APPLY_ON_DUTY,arguments:<String,dynamic>{
-      'ScreenName':'Leave Form',
-      'DocNo':docNo
-    });
-
-  }
 }
+
 
 class ScreenData {
   int? docNo;
   String? empName;
-  String? onDutyType;
-  String? fromDate;
-  String? toDate;
-  String? fromLoc;
-  String? toLoc;
-  String? fromTime;
-  String? toTime;
+  String? attendate;
+  String? inTime;
+  String? outTime;
+  String? totalhrs;
+  String? shifintime;
+  String? shifoutTime;
+  String? purchase;
   String? status;
 
   ScreenData(
       this.docNo,
       this.empName,
-      this.onDutyType,
-      this.fromDate,
-      this.toDate,
-      this.fromLoc,
-      this.toLoc,
-      this.fromTime,
-      this.toTime,
-      this.status);
+      this.attendate,
+      this.inTime,
+      this.outTime,
+      this.totalhrs,
+      this.shifintime,
+      this.shifoutTime,
+      this.purchase,this.status);
 
 
 }

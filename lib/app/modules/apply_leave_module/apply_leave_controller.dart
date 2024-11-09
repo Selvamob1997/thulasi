@@ -181,11 +181,12 @@ class ApplyLeaveController extends GetxController{
 
   postDataSave(fromId){
 
-    if(leaveType.text.isEmpty){
-      Utilities.showDialaogboxWarningMessage(context, "LeaveType is not load...", 'Notification');
-    }else if(leaveCode.isEmpty){
-      Utilities.showDialaogboxWarningMessage(context, "LeaveType is not load...", 'Notification');
-    }else if(fromdate.text.isEmpty){
+    // if(leaveType.text.isEmpty){
+    //   Utilities.showDialaogboxWarningMessage(context, "LeaveType is not load...", 'Notification');
+    // }else if(leaveCode.isEmpty){
+    //   Utilities.showDialaogboxWarningMessage(context, "LeaveType is not load...", 'Notification');
+    // }else
+    if(fromdate.text.isEmpty){
       Utilities.showDialaogboxWarningMessage(context, "From Date is not Choose...", 'Notification');
     }else if(todate.text.isEmpty){
       Utilities.showDialaogboxWarningMessage(context, "To Date is not Choose...", 'Notification');

@@ -1,16 +1,12 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:get/get.dart';
-import 'package:thulasi/app/modules/Reports/site_visit_reports_module/site_visit_reports_controller.dart';
-
-import '../../../IncludesFiles/_appbar.dart';
-
+import 'package:thulasi/app/IncludesFiles/_appbar.dart';
+import 'package:thulasi/app/modules/site_visit_approve_module/site_visit_approve_controller.dart';
 
 
-class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
+class SiteVisitApprovePage extends GetView<SiteVisitApproveController> {
   @override
-  Widget build(BuildContext context)=>GetBuilder<SiteVisitReportsController>(builder: (controller) {
+  Widget build(BuildContext context)=>GetBuilder<SiteVisitApproveController>(builder: (myController) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -24,7 +20,7 @@ class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
                 height: height/10,
                 width: width,
                 alignment: Alignment.center,
-                child: MyAppBar(screenName: 'Miss Punch',),
+                child: MyAppBar(screenName: 'Miss Punch Approve',),
               ),
               Container(
                 height: height/1.2,
@@ -34,17 +30,7 @@ class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
                   itemBuilder: (BuildContext context1, int index) {
                     return Card(
                       //color: Colors.red,
-                      child: SwipeActionCell(
-                        key: ObjectKey(index),
-                        trailingActions: <SwipeAction>[
-                          SwipeAction(
-                              icon: const Icon(Icons.remove_red_eye,color: Colors.deepOrange,),
-                              onTap: (CompletionHandler handler) async {
-                                //controller.postDataPassing(controller.secScreenData[index].docNo);
-                              },
-                              color: Colors.black12),
-                        ],
-                        child: ListTile(
+                      child:ListTile(
                           title: Column(
                             children: [
                               SizedBox(
@@ -220,34 +206,7 @@ class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 5,),
 
-                              Visibility(
-                                visible: controller.sessionApprovel=="Y"?true:false,
-                                child: SizedBox(
-                                  width: width,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ElevatedButton(onPressed: (){
-                                            controller.statusUpdataion(controller.secScreenData[index].docNo, "A");
-                                          }, child: Text("Approve")),
-                                          SizedBox(width: width/100,),
-                                          ElevatedButton(
-                                            onPressed: (){
-                                              controller.statusUpdataion(controller.secScreenData[index].docNo, "R");
-                                            }, child: Text("Reject"),
-                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                              )
                             ],
                           ),
                           dense: true,
@@ -260,8 +219,6 @@ class SiteVisitReportsPage extends GetView<SiteVisitReportsController> {
                           ),
                           onTap: (){},
                         ),
-
-                      ),
                     );
                   },
                 ),

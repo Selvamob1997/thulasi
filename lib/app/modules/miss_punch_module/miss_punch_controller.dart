@@ -43,7 +43,7 @@ class MissPunchController extends GetxController{
   int Tominist=0;
   double TotalPermision=0;
 
-  List<String> punchList =['Punch In','Punch Out'];
+  List<String> punchList =['Punch In','Punch Out','Lunch IN','Lunch Out'];
 
 
   @override
@@ -73,7 +73,7 @@ class MissPunchController extends GetxController{
     var picked = await  showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(Duration(days: 1)),
         lastDate: DateTime(2100));
     if (picked != null) {
       if (fromid == 1) {

@@ -206,7 +206,7 @@ class _SideMenuState extends State<SideMenu> {
                           color: Colors.green.shade100,
                           borderRadius: const BorderRadius.all(Radius.circular(10))
                       ),
-                      child:  Text("Permision",
+                      child:  Text("Permission",
                         style: TextStyle(
                             color: Colors.black38,
                             fontSize:SH/60,

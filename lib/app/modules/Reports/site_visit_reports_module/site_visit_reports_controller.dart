@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:thulasi/app/data/Model/SiteVistModel.dart';
 import '../../../data/repository/_allAPIList.dart';
 import '../../../utils/Utilites.dart';
+import 'package:intl/src/intl/date_format.dart';
 
 class SiteVisitReportsController extends GetxController{
 
@@ -14,6 +15,7 @@ class SiteVisitReportsController extends GetxController{
   var sessionDeptCode = '';
   var sessionDeptName = '';
   var sessionEmpId = '';
+  var sessionApprovel = '';
   SiteVistModel? rawSiteVistModel;
   List<ScreenData> secScreenData=[];
 
@@ -25,7 +27,6 @@ class SiteVisitReportsController extends GetxController{
     super.onInit();
   }
 
-
   getStringValuesSF() async {
     log("message");
     SharedPreferences prefs =await SharedPreferences.getInstance();
@@ -34,6 +35,7 @@ class SiteVisitReportsController extends GetxController{
     sessionDeptCode = prefs.getString('DeptCode').toString();
     sessionDeptName = prefs.getString('DeptName').toString();
     sessionEmpId = prefs.getString('ExtEmpNo').toString();
+    sessionApprovel = prefs.getString('Approvel').toString();
     log(sessionName);
     update();
     getSceendate();
@@ -64,7 +66,9 @@ class SiteVisitReportsController extends GetxController{
                   rawSiteVistModel!.result![i].totalhrs,
                   rawSiteVistModel!.result![i].shifintime,
                   rawSiteVistModel!.result![i].shifoutTime,
-                  rawSiteVistModel!.result![i].purchase),
+                  rawSiteVistModel!.result![i].purchase,
+                  rawSiteVistModel!.result![i].status,
+              ),
             ),
           },
           Utilities.closeLoader(),
@@ -83,6 +87,23 @@ class SiteVisitReportsController extends GetxController{
     });
   }
 
+  statusUpdataion(docNo,status){
+    Allapi.insertLeaveMaster(5, sessionUseId, "", "leaveCode", "fromDate", DateFormat('yyyy-MM-dd').format(DateTime.now()), "noOfDays",
+        "comments", status, docNo, true).then((value) => {
+      if(value.statusCode==200){
+        update(),
+        Utilities.closeLoader(),
+        getSceendate(),
+
+      }else{
+        Utilities.closeLoader(),
+        update(),
+      }
+
+
+    });
+  }
+
 
 
 }
@@ -97,6 +118,7 @@ class ScreenData {
   String? shifintime;
   String? shifoutTime;
   String? purchase;
+  String? status;
 
   ScreenData(
       this.docNo,
@@ -107,7 +129,7 @@ class ScreenData {
       this.totalhrs,
       this.shifintime,
       this.shifoutTime,
-      this.purchase);
+      this.purchase,this.status);
 
 
 }

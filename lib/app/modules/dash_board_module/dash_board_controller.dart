@@ -169,8 +169,27 @@ class DashBoardController extends GetxController{
       RouteManageMent.goToHoliyDayList();
     }else if(formid==12){
       RouteManageMent.goToActiveStatus();
-    }else if(formid==13){
+    }
+
+    else if(formid==13){
       RouteManageMent.goToMissPunch();
+    }
+
+    else if(formid==14){
+      RouteManageMent.goToLeaveReports();
+    }
+
+    else if(formid==15){
+      RouteManageMent.goToPermissionReports();
+    }
+
+
+    else if(formid==16){
+      RouteManageMent.goToOndutyReports();
+    }
+
+    else if(formid==17){
+      RouteManageMent.goToMisspunchReports();
     }
 
 

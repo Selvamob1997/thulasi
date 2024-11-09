@@ -82,4 +82,33 @@ abstract class RouteManageMent{
       'ScreenName':'Holiday List'
     });
   }
+
+
+  static void goToLeaveReports(){
+    Get.toNamed(Routes.LEAVE_APPROVE,arguments:<String,dynamic>{
+      'ScreenName':'Holiday List'
+    });
+  }
+
+
+  static void goToPermissionReports(){
+    Get.toNamed(Routes.PERMISSION_APPROVE,arguments:<String,dynamic>{
+      'ScreenName':'Holiday List'
+    });
+  }
+
+  static void goToOndutyReports(){
+    Get.toNamed(Routes.ONDUTY_MASTER_APPROVE,arguments:<String,dynamic>{
+      'ScreenName':'Holiday List'
+    });
+  }
+
+
+  static void goToMisspunchReports(){
+    Get.toNamed(Routes.SITE_VISIT_APPROVE,arguments:<String,dynamic>{
+      'ScreenName':'Holiday List'
+    });
+  }
+
+
 }

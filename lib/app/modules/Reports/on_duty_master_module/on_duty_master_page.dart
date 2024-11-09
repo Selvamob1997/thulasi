@@ -126,20 +126,43 @@ class OnDutyMasterPage extends GetView<OnDutyMasterController> {
                                         const Text('Status      ',
                                             style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700)
                                         ),
-                                        Icon(
-                                          controller.secScreenData[index].status.toString()=="P"? Icons.pending:
-                                          controller.secScreenData[index].status.toString()=="H"? Icons.pending:
-                                          Icons.check_circle,
-                                          color: controller.secScreenData[index].status.toString()=="P"? Colors.orangeAccent:
-                                          controller.secScreenData[index].status.toString()=="H"? Colors.red:
-                                          Colors.green,
 
+                                        Text(
+                                          controller.secScreenData[index].status.toString()=="P"? "Pending":
+                                          controller.secScreenData[index].status.toString()=="R"? "Cancel":"Approved",
                                         )
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
+                              const SizedBox(height: 5,),
+                              Visibility(
+                                visible: controller.sessionApprovel=="Y"?true:false,
+                                child: SizedBox(
+                                  width: width,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          ElevatedButton(onPressed: (){
+                                            controller.statusUpdataion(controller.secScreenData[index].docNo, "A");
+                                          }, child: Text("Approve")),
+                                          SizedBox(width: width/100,),
+                                          ElevatedButton(
+                                            onPressed: (){
+                                              controller.statusUpdataion(controller.secScreenData[index].docNo, "R");
+                                            }, child: Text("Reject"),
+                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                                          ),
+
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                              )
                             ],
                           ),
                           dense: true,

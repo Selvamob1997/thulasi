@@ -86,64 +86,64 @@ class ApplyLeavePage extends GetView<ApplyLeaveController> {
               //     ],
               //   ),
               // ),
-              SizedBox(height: height/60,),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: height/30),
-                child: Material(
-                  elevation: 2.0,
-                  borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                  color: Colors.white,
-                  shadowColor: Colors.black,
-                  child: TextField(
-                    controller: controler.leaveType,
-                    onChanged: (String value) {},
-                    cursorColor: Colors.blue,
-                    readOnly: true,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        labelText: 'Leave Type',
-                        prefixIcon: Material(
-                          elevation: 0,
-                          borderRadius: BorderRadius.all(Radius.circular(height/15)),
-                          child: const Icon(
-                            Icons.pan_tool_alt,
-                            color: Colors.orange,
-                          ),
-                        ),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
-                    onTap: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Choose Leave Type'),
-                            content: SizedBox(
-                              width: double.minPositive,
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: controler.secLeaveTypeList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ListTile(
-                                    title: Text(controler.secLeaveTypeList[index].descripition),
-                                    onTap: () {
-
-                                      controler.leaveType.text = controler.secLeaveTypeList[index].descripition;
-                                      controler.leaveCode = controler.secLeaveTypeList[index].code;
-                                        Navigator.pop(context,);
-
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
+              // SizedBox(height: height/60,),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: height/30),
+              //   child: Material(
+              //     elevation: 2.0,
+              //     borderRadius: BorderRadius.all(Radius.circular(height/10)),
+              //     color: Colors.white,
+              //     shadowColor: Colors.black,
+              //     child: TextField(
+              //       controller: controler.leaveType,
+              //       onChanged: (String value) {},
+              //       cursorColor: Colors.blue,
+              //       readOnly: true,
+              //       keyboardType: TextInputType.text,
+              //       decoration: InputDecoration(
+              //           labelText: 'Leave Type',
+              //           prefixIcon: Material(
+              //             elevation: 0,
+              //             borderRadius: BorderRadius.all(Radius.circular(height/15)),
+              //             child: const Icon(
+              //               Icons.pan_tool_alt,
+              //               color: Colors.orange,
+              //             ),
+              //           ),
+              //           border: InputBorder.none,
+              //           contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
+              //       onTap: (){
+              //         showDialog(
+              //           context: context,
+              //           builder: (BuildContext context) {
+              //             return AlertDialog(
+              //               title: const Text('Choose Leave Type'),
+              //               content: SizedBox(
+              //                 width: double.minPositive,
+              //                 child: ListView.builder(
+              //                   shrinkWrap: true,
+              //                   itemCount: controler.secLeaveTypeList.length,
+              //                   itemBuilder: (BuildContext context, int index) {
+              //                     return ListTile(
+              //                       title: Text(controler.secLeaveTypeList[index].descripition),
+              //                       onTap: () {
+              //
+              //                         controler.leaveType.text = controler.secLeaveTypeList[index].descripition;
+              //                         controler.leaveCode = controler.secLeaveTypeList[index].code;
+              //                           Navigator.pop(context,);
+              //
+              //                       },
+              //                     );
+              //                   },
+              //                 ),
+              //               ),
+              //             );
+              //           },
+              //         );
+              //       },
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: height/60,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: height/30),

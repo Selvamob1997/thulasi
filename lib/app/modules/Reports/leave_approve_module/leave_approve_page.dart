@@ -1,14 +1,12 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:get/get.dart';
-import 'package:thulasi/app/modules/Reports/leave_list_module/leave_list_controller.dart';
-import '../../../IncludesFiles/_appbar.dart';
+import 'package:thulasi/app/IncludesFiles/_appbar.dart';
+import 'package:thulasi/app/modules/Reports/leave_approve_module/leave_approve_controller.dart';
 
 
-class LeaveListPage extends GetView<LeaveListController> {
+class LeaveApprovePage extends GetView<LeaveApproveController> {
   @override
-  Widget build(BuildContext context)=>GetBuilder<LeaveListController>(builder: (controller) {
+  Widget build(BuildContext context)=>GetBuilder<LeaveApproveController>(builder: (myController) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -22,7 +20,7 @@ class LeaveListPage extends GetView<LeaveListController> {
                 height: height/10,
                 width: width,
                 alignment: Alignment.center,
-                child: MyAppBar(screenName: 'Leave Approve',),
+                child: MyAppBar(screenName: 'Leave Reports',),
               ),
               Container(
                 height: height/1.2,
@@ -32,41 +30,7 @@ class LeaveListPage extends GetView<LeaveListController> {
                   itemBuilder: (BuildContext context1, int index) {
                     return Card(
                       //color: Colors.red,
-                      child: SwipeActionCell(
-                        key: ObjectKey(index),
-                        trailingActions: <SwipeAction>[
-                          SwipeAction(
-                              icon: const Icon(Icons.check_circle_rounded,color: Colors.green,),
-                              onTap: (CompletionHandler handler) async {
-                                if(controller.secScreenData[index].status=="H"){
-                                  controller.statusUpdataion(controller.secScreenData[index].docNo, "P");
-                                }else{
-                                  log("Others");
-                                }
-
-                              },
-                              color: Colors.black12),
-                          SwipeAction(
-                              icon: const Icon(Icons.cancel,color: Colors.red,),
-                              onTap: (CompletionHandler handler) async {
-                                if(controller.secScreenData[index].status=="P"){
-                                  controller.statusUpdataion(controller.secScreenData[index].docNo, "H");
-                                }else{
-                                  log("Others");
-                                }
-
-                              },
-                              color: Colors.black12),
-                          SwipeAction(
-                              icon: const Icon(Icons.remove_red_eye,color: Colors.deepOrange,),
-                              onTap: (CompletionHandler handler) async {
-                                controller.postDataPassing(controller.secScreenData[index].docNo);
-
-                              },
-                              color: Colors.black12),
-
-                        ],
-                        child: ListTile(
+                      child: ListTile(
                           title: Column(
                             children: [
                               SizedBox(
@@ -103,10 +67,10 @@ class LeaveListPage extends GetView<LeaveListController> {
                                             style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700)
                                         ),
                                         Icon(
-                                            controller.secScreenData[index].status.toString()=="P"? Icons.pending:
-                                            controller.secScreenData[index].status.toString()=="H"? Icons.pending:
-                                            controller.secScreenData[index].status.toString()=="A"?Icons.check_circle:
-                                            Icons.cancel,
+                                          controller.secScreenData[index].status.toString()=="P"? Icons.pending:
+                                          controller.secScreenData[index].status.toString()=="H"? Icons.pending:
+                                          controller.secScreenData[index].status.toString()=="A"?Icons.check_circle:
+                                          Icons.cancel,
                                           color: controller.secScreenData[index].status.toString()=="P"? Colors.orangeAccent:
                                           controller.secScreenData[index].status.toString()=="H"? Colors.pinkAccent:
                                           controller.secScreenData[index].status.toString()=="A"? Colors.green:
@@ -119,35 +83,6 @@ class LeaveListPage extends GetView<LeaveListController> {
                                 ),
                               ),
                               const SizedBox(height: 5,),
-
-                              Visibility(
-                                visible: controller.sessionApprovel=="Y"?true:false,
-                                child: SizedBox(
-                                width: width,
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        ElevatedButton(onPressed: (){
-                                          controller.statusUpdataion(controller.secScreenData[index].docNo, "A");
-                                        }, child: Text("Approve")),
-                                        SizedBox(width: width/100,),
-                                        ElevatedButton(
-                                          onPressed: (){
-                                            controller.statusUpdataion(controller.secScreenData[index].docNo, "R");
-                                          }, child: Text("Reject"),
-                                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                                        ),
-
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-
-                              )
-
-
                             ],
                           ),
                           dense: true,
@@ -169,8 +104,6 @@ class LeaveListPage extends GetView<LeaveListController> {
 
                           },
                         ),
-
-                      ),
                     );
                   },
                 ),

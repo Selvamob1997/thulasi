@@ -1,15 +1,12 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:get/get.dart';
-import 'package:thulasi/app/modules/Reports/permision_list_module/permision_list_controller.dart';
+import 'package:thulasi/app/IncludesFiles/_appbar.dart';
+import 'package:thulasi/app/modules/Reports/onduty_master_approve_module/onduty_master_approve_controller.dart';
 
-import '../../../IncludesFiles/_appbar.dart';
 
-
-class PermisionListPage extends GetView<PermisionListController> {
+class OndutyMasterApprovePage extends GetView<OndutyMasterApproveController> {
   @override
-  Widget build(BuildContext context)=>GetBuilder<PermisionListController>(builder: (controller) {
+  Widget build(BuildContext context)=>GetBuilder<OndutyMasterApproveController>(builder: (controller) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -23,7 +20,7 @@ class PermisionListPage extends GetView<PermisionListController> {
                 height: height/10,
                 width: width,
                 alignment: Alignment.center,
-                child: MyAppBar(screenName: 'Permission Approve',),
+                child: MyAppBar(screenName: 'On duty Reports',),
               ),
               Container(
                 height: height/1.2,
@@ -33,17 +30,7 @@ class PermisionListPage extends GetView<PermisionListController> {
                   itemBuilder: (BuildContext context1, int index) {
                     return Card(
                       //color: Colors.red,
-                      child: SwipeActionCell(
-                        key: ObjectKey(index),
-                        trailingActions: <SwipeAction>[
-                          SwipeAction(
-                              icon: const Icon(Icons.remove_red_eye,color: Colors.deepOrange,),
-                              onTap: (CompletionHandler handler) async {
-                               controller.postDataPassing(controller.secScreenData[index].docNo);
-                              },
-                              color: Colors.black12),
-                        ],
-                        child: ListTile(
+                      child: ListTile(
                           title: Column(
                             children: [
                               SizedBox(
@@ -51,6 +38,14 @@ class PermisionListPage extends GetView<PermisionListController> {
                                 child: Text(
                                   controller.secScreenData[index].empName .toString(),
                                   style: const TextStyle(color: Colors.purpleAccent,fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Text(
+                                  controller.secScreenData[index].onDutyType .toString(),
+                                  style: const TextStyle(color: Colors.pinkAccent,fontWeight: FontWeight.w700),
                                 ),
                               ),
                               const SizedBox(height: 5,),
@@ -65,16 +60,46 @@ class PermisionListPage extends GetView<PermisionListController> {
                               SizedBox(
                                 width: width,
                                 child: Text(
-                                    controller.secScreenData[index].fromTime.toString(),
-                                    style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                    controller.secScreenData[index].toDate.toString(),
+                                    style: const TextStyle(color: Colors.black45,fontWeight: FontWeight.w500)
                                 ),
                               ),
                               const SizedBox(height: 5,),
                               SizedBox(
                                 width: width,
-                                child: Text(
-                                    controller.secScreenData[index].toTime.toString(),
-                                    style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        controller.secScreenData[index].fromTime.toString(),
+                                        style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                    ),
+                                    Text(
+                                        controller.secScreenData[index].fromTime.toString(),
+                                        style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                    ),
+                                    Text(
+                                        controller.secScreenData[index].toTime.toString(),
+                                        style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
+                                width: width,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        controller.secScreenData[index].fromLoc.toString(),
+                                        style: const TextStyle(color: Colors.red,fontWeight: FontWeight.w500)
+                                    ),
+                                    Text(
+                                        controller.secScreenData[index].toLoc.toString(),
+                                        style: const TextStyle(color: Colors.teal,fontWeight: FontWeight.w500)
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 5,),
@@ -87,43 +112,20 @@ class PermisionListPage extends GetView<PermisionListController> {
                                         const Text('Status      ',
                                             style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700)
                                         ),
+                                        Icon(
+                                          controller.secScreenData[index].status.toString()=="P"? Icons.pending:
+                                          controller.secScreenData[index].status.toString()=="H"? Icons.pending:
+                                          Icons.check_circle,
+                                          color: controller.secScreenData[index].status.toString()=="P"? Colors.orangeAccent:
+                                          controller.secScreenData[index].status.toString()=="H"? Colors.red:
+                                          Colors.green,
 
-                                        Text(
-                                          controller.secScreenData[index].status.toString()=="P"? "Pending":
-                                          controller.secScreenData[index].status.toString()=="R"? "Cancel":"Approved",
                                         )
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 5,),
-                              Visibility(
-                                visible: controller.sessionApprovel=="Y"?true:false,
-                                child: SizedBox(
-                                  width: width,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ElevatedButton(onPressed: (){
-                                            controller.statusUpdataion(controller.secScreenData[index].docNo, "A");
-                                          }, child: Text("Approve")),
-                                          SizedBox(width: width/100,),
-                                          ElevatedButton(
-                                            onPressed: (){
-                                              controller.statusUpdataion(controller.secScreenData[index].docNo, "R");
-                                            }, child: Text("Reject"),
-                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                              )
                             ],
                           ),
                           dense: true,
@@ -140,7 +142,6 @@ class PermisionListPage extends GetView<PermisionListController> {
                             maxRadius: 30,
                             minRadius: 30,
                             child: Container(
-
                               child: Text(
                                   controller.secScreenData[index].toTime.toString(),
                                   style:  TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: height/75)
@@ -154,14 +155,17 @@ class PermisionListPage extends GetView<PermisionListController> {
                           },
                         ),
 
-                      ),
+                     // ),
                     );
                   },
                 ),
               )
+
+
             ],
           ),
         ),
+
       ),
     );
   });

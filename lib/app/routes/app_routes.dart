@@ -22,4 +22,8 @@ abstract class Routes {
   static const HOLI_DAY_LIST = '/holi_day_list'; // HoliDayList page
   static const ACTIVE_STATUS = '/active_status'; // ActiveStatus page
   static const MISS_PUNCH = '/miss_punch'; // MissPunch page
+  static const LEAVE_APPROVE = '/leave_approve'; // LeaveApprove page
+  static const PERMISSION_APPROVE = '/permission_approve'; // PermissionApprove page
+  static const ONDUTY_MASTER_APPROVE = '/onduty_master_approve'; // OndutyMasterApprove page
+  static const SITE_VISIT_APPROVE = '/site_visit_approve'; // SiteVisitApprove page
 }

@@ -38,7 +38,7 @@ class MissPunchPage extends GetView<MissPunchController> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Choose Leave Type'),
+                              title: const Text('Choose Type'),
                               content: SizedBox(
                                 width: double.minPositive,
                                 child: ListView.builder(
@@ -49,6 +49,9 @@ class MissPunchPage extends GetView<MissPunchController> {
                                       title: Text(myController.punchList[index].toString()),
                                       onTap: () {
                                         myController.type.text = myController.punchList[index].toString();
+                                        myController.inTime.text = "";
+                                        myController.outTime.text = "";
+
                                         Navigator.pop(context,);
                                       },
                                     );
@@ -119,7 +122,11 @@ class MissPunchPage extends GetView<MissPunchController> {
                       controller: myController.inTime,
                       readOnly:true ,
                       onTap: (){
-                        myController.selectFromTime(context);
+                        if(myController.type.text.toString()=="Punch In"){
+                          myController.selectFromTime(context);
+                        }
+
+
                       },
                       cursorColor: Colors.black12,
                       keyboardType: TextInputType.text,
@@ -150,7 +157,10 @@ class MissPunchPage extends GetView<MissPunchController> {
                       controller: myController.outTime,
                       readOnly:true ,
                       onTap: (){
-                        myController.selectToTime(context);
+                        if(myController.type.text.toString()=="Punch Out"){
+                          myController.selectToTime(context);
+                        }
+
                       },
                       cursorColor: Colors.black12,
                       keyboardType: TextInputType.text,
@@ -200,99 +210,99 @@ class MissPunchPage extends GetView<MissPunchController> {
                     ),
                   ),
                 ),
-                SizedBox(height: height/60,),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: height/30),
-                  child: Material(
-                    elevation: 2.0,
-                    borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                    color: Colors.white,
-                    shadowColor: Colors.black,
-                    child: TextField(
-                      controller: myController.shiftName,
-                      readOnly:true ,
-                      onTap: (){
-                        //myController.selectToDate(1,context);
-                      },
-                      cursorColor: Colors.black12,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          labelText: 'Shift Name',
-                          prefixIcon: Material(
-                            elevation: 0,
-                            borderRadius: BorderRadius.all(Radius.circular(height/15)),
-                            child: const Icon(
-                              Icons.date_range,
-                              color: Colors.orange,
-                            ),
-                          ),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
-                    ),
-                  ),
-                ),
-                SizedBox(height: height/60,),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: height/30),
-                  child: Material(
-                    elevation: 2.0,
-                    borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                    color: Colors.white,
-                    shadowColor: Colors.black,
-                    child: TextField(
-                      controller: myController.shiftInName,
-                      readOnly:true ,
-                      onTap: (){
-                        //myController.selectToDate(1,context);
-                      },
-                      cursorColor: Colors.black12,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          labelText: 'Shift In Time',
-                          prefixIcon: Material(
-                            elevation: 0,
-                            borderRadius: BorderRadius.all(Radius.circular(height/15)),
-                            child: const Icon(
-                              Icons.date_range,
-                              color: Colors.orange,
-                            ),
-                          ),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
-                    ),
-                  ),
-                ),
-                SizedBox(height: height/60,),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: height/30),
-                  child: Material(
-                    elevation: 2.0,
-                    borderRadius: BorderRadius.all(Radius.circular(height/10)),
-                    color: Colors.white,
-                    shadowColor: Colors.black,
-                    child: TextField(
-                      controller: myController.shiftOutName,
-                      readOnly:true ,
-                      onTap: (){
-                        //myController.selectToDate(1,context);
-                      },
-                      cursorColor: Colors.black12,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          labelText: 'Shift Out Time',
-                          prefixIcon: Material(
-                            elevation: 0,
-                            borderRadius: BorderRadius.all(Radius.circular(height/15)),
-                            child: const Icon(
-                              Icons.date_range,
-                              color: Colors.orange,
-                            ),
-                          ),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
-                    ),
-                  ),
-                ),
+                // SizedBox(height: height/60,),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: height/30),
+                //   child: Material(
+                //     elevation: 2.0,
+                //     borderRadius: BorderRadius.all(Radius.circular(height/10)),
+                //     color: Colors.white,
+                //     shadowColor: Colors.black,
+                //     child: TextField(
+                //       controller: myController.shiftName,
+                //       readOnly:true ,
+                //       onTap: (){
+                //         //myController.selectToDate(1,context);
+                //       },
+                //       cursorColor: Colors.black12,
+                //       keyboardType: TextInputType.text,
+                //       decoration: InputDecoration(
+                //           labelText: 'Shift Name',
+                //           prefixIcon: Material(
+                //             elevation: 0,
+                //             borderRadius: BorderRadius.all(Radius.circular(height/15)),
+                //             child: const Icon(
+                //               Icons.date_range,
+                //               color: Colors.orange,
+                //             ),
+                //           ),
+                //           border: InputBorder.none,
+                //           contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: height/60,),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: height/30),
+                //   child: Material(
+                //     elevation: 2.0,
+                //     borderRadius: BorderRadius.all(Radius.circular(height/10)),
+                //     color: Colors.white,
+                //     shadowColor: Colors.black,
+                //     child: TextField(
+                //       controller: myController.shiftInName,
+                //       readOnly:true ,
+                //       onTap: (){
+                //         //myController.selectToDate(1,context);
+                //       },
+                //       cursorColor: Colors.black12,
+                //       keyboardType: TextInputType.text,
+                //       decoration: InputDecoration(
+                //           labelText: 'Shift In Time',
+                //           prefixIcon: Material(
+                //             elevation: 0,
+                //             borderRadius: BorderRadius.all(Radius.circular(height/15)),
+                //             child: const Icon(
+                //               Icons.date_range,
+                //               color: Colors.orange,
+                //             ),
+                //           ),
+                //           border: InputBorder.none,
+                //           contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(height: height/60,),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: height/30),
+                //   child: Material(
+                //     elevation: 2.0,
+                //     borderRadius: BorderRadius.all(Radius.circular(height/10)),
+                //     color: Colors.white,
+                //     shadowColor: Colors.black,
+                //     child: TextField(
+                //       controller: myController.shiftOutName,
+                //       readOnly:true ,
+                //       onTap: (){
+                //         //myController.selectToDate(1,context);
+                //       },
+                //       cursorColor: Colors.black12,
+                //       keyboardType: TextInputType.text,
+                //       decoration: InputDecoration(
+                //           labelText: 'Shift Out Time',
+                //           prefixIcon: Material(
+                //             elevation: 0,
+                //             borderRadius: BorderRadius.all(Radius.circular(height/15)),
+                //             child: const Icon(
+                //               Icons.date_range,
+                //               color: Colors.orange,
+                //             ),
+                //           ),
+                //           border: InputBorder.none,
+                //           contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: height/50)),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(height: height/60,),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: height/30),

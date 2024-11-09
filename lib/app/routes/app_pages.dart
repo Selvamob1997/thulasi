@@ -1,3 +1,9 @@
+import '../../app/modules/site_visit_approve_module/site_visit_approve_page.dart';
+import '../../app/modules/site_visit_approve_module/site_visit_approve_bindings.dart';
+
+import 'package:thulasi/app/modules/Reports/permission_approve_module/permission_approve_bindings.dart';
+import 'package:thulasi/app/modules/Reports/permission_approve_module/permission_approve_page.dart';
+import 'package:thulasi/app/modules/Reports/leave_approve_module/leave_approve_page.dart';
 import '../../app/modules/miss_punch_module/miss_punch_page.dart';
 import '../../app/modules/miss_punch_module/miss_punch_bindings.dart';
 import '../../app/modules/active_status_module/active_status_page.dart';
@@ -33,6 +39,9 @@ import '../../app/modules/splash_screen_module/splash_screen_bindings.dart';
 import '../../app/modules/splash_screen_module/splash_screen_page.dart';
 import 'package:get/get.dart';
 
+import '../modules/Reports/leave_approve_module/leave_approve_bindings.dart';
+import '../modules/Reports/onduty_master_approve_module/onduty_master_approve_bindings.dart';
+import '../modules/Reports/onduty_master_approve_module/onduty_master_approve_page.dart';
 import '../modules/apply_permision_module/apply_permision_page.dart';
 import '../modules/dash_board_module/dash_board_page.dart';
 part './app_routes.dart';
@@ -127,6 +136,26 @@ abstract class AppPages {
       name: Routes.MISS_PUNCH,
       page: () => MissPunchPage(),
       binding: MissPunchBinding(),
+    ),
+    GetPage(
+      name: Routes.LEAVE_APPROVE,
+      page: () => LeaveApprovePage(),
+      binding: LeaveApproveBinding(),
+    ),
+    GetPage(
+      name: Routes.PERMISSION_APPROVE,
+      page: () => PermissionApprovePage(),
+      binding: PermissionApproveBinding(),
+    ),
+    GetPage(
+      name: Routes.ONDUTY_MASTER_APPROVE,
+      page: () => OndutyMasterApprovePage(),
+      binding: OndutyMasterApproveBinding(),
+    ),
+    GetPage(
+      name: Routes.SITE_VISIT_APPROVE,
+      page: () => SiteVisitApprovePage(),
+      binding: SiteVisitApproveBinding(),
     ),
   ];
 }

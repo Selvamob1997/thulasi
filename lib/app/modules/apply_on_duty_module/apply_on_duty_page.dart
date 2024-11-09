@@ -54,7 +54,7 @@ class ApplyOnDutyPage extends GetView<ApplyOnDutyController> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: const Text('Choose Leave Type'),
+                            title: const Text('Choose session Type'),
                             content: SizedBox(
                               width: double.minPositive,
                               child: ListView.builder(

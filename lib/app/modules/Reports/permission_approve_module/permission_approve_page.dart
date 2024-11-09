@@ -1,15 +1,12 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_swipe_action_cell/flutter_swipe_action_cell.dart';
 import 'package:get/get.dart';
-import 'package:thulasi/app/modules/Reports/permision_list_module/permision_list_controller.dart';
+import 'package:thulasi/app/IncludesFiles/_appbar.dart';
+import 'package:thulasi/app/modules/Reports/permission_approve_module/permission_approve_controller.dart';
 
-import '../../../IncludesFiles/_appbar.dart';
 
-
-class PermisionListPage extends GetView<PermisionListController> {
+class PermissionApprovePage extends GetView<PermissionApproveController> {
   @override
-  Widget build(BuildContext context)=>GetBuilder<PermisionListController>(builder: (controller) {
+  Widget build(BuildContext context)=>GetBuilder<PermissionApproveController>(builder: (myController) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return SafeArea(
@@ -23,7 +20,7 @@ class PermisionListPage extends GetView<PermisionListController> {
                 height: height/10,
                 width: width,
                 alignment: Alignment.center,
-                child: MyAppBar(screenName: 'Permission Approve',),
+                child: MyAppBar(screenName: 'Permission Reports',),
               ),
               Container(
                 height: height/1.2,
@@ -33,17 +30,7 @@ class PermisionListPage extends GetView<PermisionListController> {
                   itemBuilder: (BuildContext context1, int index) {
                     return Card(
                       //color: Colors.red,
-                      child: SwipeActionCell(
-                        key: ObjectKey(index),
-                        trailingActions: <SwipeAction>[
-                          SwipeAction(
-                              icon: const Icon(Icons.remove_red_eye,color: Colors.deepOrange,),
-                              onTap: (CompletionHandler handler) async {
-                               controller.postDataPassing(controller.secScreenData[index].docNo);
-                              },
-                              color: Colors.black12),
-                        ],
-                        child: ListTile(
+                      child: ListTile(
                           title: Column(
                             children: [
                               SizedBox(
@@ -90,40 +77,13 @@ class PermisionListPage extends GetView<PermisionListController> {
 
                                         Text(
                                           controller.secScreenData[index].status.toString()=="P"? "Pending":
-                                          controller.secScreenData[index].status.toString()=="R"? "Cancel":"Approved",
+                                          controller.secScreenData[index].status.toString()=="H"? "Cancel":"Approved",
                                         )
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 5,),
-                              Visibility(
-                                visible: controller.sessionApprovel=="Y"?true:false,
-                                child: SizedBox(
-                                  width: width,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          ElevatedButton(onPressed: (){
-                                            controller.statusUpdataion(controller.secScreenData[index].docNo, "A");
-                                          }, child: Text("Approve")),
-                                          SizedBox(width: width/100,),
-                                          ElevatedButton(
-                                            onPressed: (){
-                                              controller.statusUpdataion(controller.secScreenData[index].docNo, "R");
-                                            }, child: Text("Reject"),
-                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                              )
                             ],
                           ),
                           dense: true,
@@ -154,7 +114,7 @@ class PermisionListPage extends GetView<PermisionListController> {
                           },
                         ),
 
-                      ),
+
                     );
                   },
                 ),

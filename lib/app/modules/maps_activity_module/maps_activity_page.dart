@@ -147,8 +147,8 @@ class MapsActivityPage extends GetView<MapsActivityController> {
                 alignment: Alignment.center,
                 child: Text(
                   controllermain.attendancestatus.toString()=="0"?'Start Attendance':
-                  controllermain.attendancestatus.toString()=="O"?'Lunch In':
-                  controllermain.attendancestatus.toString()=="LIN"?'Lunch Out':
+                  controllermain.attendancestatus.toString()=="O"?'Lunch Out':
+                  controllermain.attendancestatus.toString()=="LIN"?'Lunch In':
                   'Stop Attendance',style: TextStyle(color: Colors.white,fontSize: height/35,fontWeight: FontWeight.bold),),
               ),
             ),
