@@ -42,10 +42,11 @@ class MapsActivityController extends GetxController{
   List<BranchScreen> secBranchScreen=[];
   var branchName ='';
   var branchCode='';
-  double tolrenaces=300;
+  double tolrenaces=60;
   double diff=0;
   var fromLat='0';
   var fromLong='0';
+  var sessionDitance='0';
 
   @override
   void onInit() {
@@ -67,6 +68,8 @@ class MapsActivityController extends GetxController{
     sessionEmpId = prefs.getString('ExtEmpNo').toString();
     fromLat = prefs.getString('FromLat').toString();
     fromLong = prefs.getString('FromLong').toString();
+    sessionDitance = prefs.getString('distance').toString();
+    tolrenaces = double.parse(sessionDitance.toString());
     log(sessionName);
     if(fromLat.toString()=="0"){
       Utilities.showDialaogboxWarning(Get.context, "Check The Employee Master Lat And Long",);

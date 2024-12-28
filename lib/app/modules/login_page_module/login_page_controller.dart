@@ -53,6 +53,7 @@ class LoginPageController extends GetxController{
    else{
      Allapi.postRequest1(username, password,identifier,true).then((value) => {
        log(value.body),
+       print(value.statusCode),
        if(value.statusCode==200){
          login = jsonDecode(value.body)['status'] = 0,
          if(login==false){
@@ -80,6 +81,7 @@ class LoginPageController extends GetxController{
                 jsonDecode(value.body)['result'][0]['FromLong'].toString(),
                 jsonDecode(value.body)['result'][0]['Approvel'].toString(),
                 jsonDecode(value.body)['result'][0]['BloodGrop'].toString(),
+                jsonDecode(value.body)['result'][0]['distance'].toString(),
            )
 
          }
@@ -93,7 +95,7 @@ class LoginPageController extends GetxController{
       deptCode,deptName,sex,
       offtell,mobile,
       email,bankac,homest,homecity,bob,marstatus,
-      emptype,exempno, DOJ,fromLat,fromLong,approvel,bloodGrop) async {
+      emptype,exempno, DOJ,fromLat,fromLong,approvel,bloodGrop,distance) async {
 
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;
@@ -117,6 +119,7 @@ class LoginPageController extends GetxController{
     prefs.setString("FromLong",fromLong.toString());
     prefs.setString("Approvel",approvel.toString());
     prefs.setString("bloodGrop",bloodGrop.toString());
+    prefs.setString("distance",distance.toString());
 
     prefs.setString("Status", "Login");
     RouteManageMent.goToDashboard();
